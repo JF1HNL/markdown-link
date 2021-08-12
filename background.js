@@ -1,10 +1,42 @@
 //コンテクストメニュー　右クリック時に出る表示のやつ
 chrome.runtime.onInstalled.addListener(function() {
   const menu = chrome.contextMenus.create({
-    "title" : "タイトル付きのリンクをコピー",
+    "title" : "リンクをコピー",
     "type"  : "normal",
-    "onclick" : copylink()
+    "id": "parent"
   });
+
+  const title_link = chrome.contextMenus.create({
+    type: "normal",
+    id: "title_link",
+    parentId: "parent",
+    title: "タイトルとリンクをコピー",
+    onclick : function(info, tab){
+
+      const geted_data = {
+        "url" : info.pageUrl,
+        "title" : tab.title
+      }
+      saveToClipboard(`${geted_data.title} ${geted_data.url}`)
+
+    }
+  })
+
+  const markdown_link = chrome.contextMenus.create({
+    type: "normal",
+    id: "markdown_link",
+    parentId: "parent",
+    title: "markdown形式でコピー",
+    onclick: function(info, tab){
+
+      const geted_data = {
+        "url" : info.pageUrl,
+        "title" : tab.title
+      }
+      saveToClipboard(`[${geted_data.title}](${geted_data.url})`)
+
+    }
+  })
 });
   
 //選択中の文字列を取得する関数
