@@ -1,6 +1,6 @@
 {
   "name": "copy link",
-  "version": "1.1.0",
+  "version": "2.1.0",
   "manifest_version": 2,
   "description": "link copy",
   "background": {
